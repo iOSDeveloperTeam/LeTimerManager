@@ -1,0 +1,44 @@
+//
+//  LeTimerManager.h
+//  WhatsLive
+//
+//  Created by letv-lic on 15/12/18.
+//  Copyright © 2015年 letv. All rights reserved.
+//
+//  计时器封装
+
+#import <Foundation/Foundation.h>
+
+@interface LeTimerManager : NSObject
+
++ (LeTimerManager *)sharedInstance;
+
+/**
+ 启动一个timer，默认精度为0.1秒
+ 
+ @param timerName       timer的名称，作为唯一标识
+ @param interval        执行的时间间隔
+ @param queue           timer将被放入的队列，也就是最终action执行的队列。传入nil将自动放到一个子线程队列中
+ @param repeats         timer是否循环调用
+ @param actionOption    多次schedule同一个timer时的操作选项(目前提供将之前的任务废除或合并的选项)
+ @param action          时间间隔到点时执行的block
+ */
+- (void)scheduledDispatchTimerWithName:(NSString *)timerName
+                          timeInterval:(double)interval
+                                 queue:(dispatch_queue_t)queue
+                               repeats:(BOOL)repeats
+                                action:(dispatch_block_t)action;
+
+/**
+ 撤销某个timer
+ 
+ @param timerName timer的名称，作为唯一标识
+ */
+- (void)cancelTimerWithName:(NSString *)timerName;
+
+/**
+ 撤销所有的timer
+ */
+- (void)cancelAllTimer;
+
+@end
